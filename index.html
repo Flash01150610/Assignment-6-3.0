@@ -86,11 +86,17 @@ this.input.keyboard.on(keydown-three’ , function event {
 this.input.keyboard.on(keydown-four’ , function event {
 	this.scene.start(‘water’);
 
+// set up an event listener for the space key to go back to every scene 
+this.input.keyboard.on(keydown-four’ , function event {
+	this.scene.start(‘thunder’);
+
 // Add both scenes to the game
 game.scene.add('mage', Scene1);
 game.scene.add('dragon ', Scene2)
 game.scene.add(‘trees ',scene3)
-game.scene.add( water ',scene4)
+game.scene.add('water ',scene4)
+game.scene.add('thunder ',scene4)
+
 
 // Start the initial scene
 game.scene.start('default');
