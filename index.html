@@ -1,6 +1,6 @@
-<!doctype html> 
-<html lang="en"> 
-<head> 
+<!doctype html>
+<html lang="en">
+<head>
     <meta charset="UTF-8" />
     <title>Making your first Phaser 3 Game - Part 10</title>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
@@ -12,144 +12,105 @@
 </head>
 <body>
 <script type="text/javascript">
-// Create a new Phaser Game instance with a configuration object
-const config = {
-    type: Phaser.AUTO,
-    width: 800,
-    height: 600,
-    scene: {
-        // Initial scene
+    // Create a new Phaser Game instance with a configuration object
+    const config = {
+        type: Phaser.AUTO,
+        width: 800,
+        height: 600,
+        physics: {
+            default: 'arcade',
+            arcade: {
+                gravity: { y: 300 },
+                debug: false
+            }
+        },
+        scene: [Scene1, Scene2] // Add both scenes here
+    };
+
+    const game = new Phaser.Game(config);
+
+    // Define the first scene
+    const Scene1 = {
         preload: preload,
         create: create,
         update: update
+    };
+
+    function preload() {
+        this.load.image('mage', 'mage.png');
+        this.load.image('tree', 'tree.png');
+        this.load.image('dragon', 'dragon.png');
+        this.load.image('thunder', 'thunder.png');
+        this.load.image('water', 'water.png');
+        this.load.spritesheet('rocks', 'rocks.png', { frameWidth: 32, frameHeight: 48 });
+        
+        // Load background image if available
+        this.load.image('background', 'background.png');
     }
-};
-var config = {
-    type: Phaser.AUTO,
-    width: 800,
-    height: 600,
-    physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 300 },
-            debug: false
-        }
-    },
-    scene: {
-        preload: preload,
-        create: create,
-        update: update
+
+    function create() {
+        const background = this.add.sprite(0, 0, 'background').setOrigin(0, 0);
+        
+        const text = this.add.text(400, 300, 'Scene 1 - Press Space to Transition', {
+            fontSize: '24px',
+            fill: '#fff' // Added fill color here
+        });
+        text.setOrigin(0.5);
+
+        // Set up event listener for transitioning to the next scene
+        this.input.keyboard.on('keydown-SPACE', () => {
+            this.scene.start('Scene2');
+        });
     }
-};
 
-var player;
-var mage;
-var dragon;
-var trees;
-var thunder;
-var water;
-var rocks;
-var score = 0;
-var gameOver = false;
-var scoreText;
-const game = new Phaser.Game(config);
-function preload ()
-{
-    this.load.image('mage', 'mage.png');
-    this.load.image('tree', 'tree.png');
-    this.load.image('dragon', 'dragon.png');
-    this.load.image('thunder', 'thunder.png');
-    this.load.image('water', 'water.png');
-    this.load.spritesheet('rocks', 'rocks.png', { frameWidth: 32, frameHeight: 48 });
-}
+    function update() {
+        // Add any game logic or updates here
+    }
 
-}
+    // Define the second scene
+    const Scene2 = {
+        preload: preloadScene2,
+        create: createScene2,
+        update: updateScene2
+    };
 
-// Create function for initializing game objects
-function create() {
-    // Add a background sprite
-    const background = this.add.sprite(0, 0, 'background').setOrigin(0, 0);
-
-    // Set up a text object to display scene information
-    const text = this.add.text(400, 300, 'Scene 1 - Press Space to Transition', {
-        fontSize: '24px',
-        fill: 
-    });
-    text.setOrigin(0.5);
-
-    // Define a key for transitioning to the next scene
-    const spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-
-    // Set up an event listener for the space key
-    this.input.keyboard.on('keydown-SPACE', function (event) {
-        // Transition to the next scene
-        this.scene.start('Scene2');
-    }, this);
-}
-
-// Update function for game logic
-function update() {
-    // Add any game logic or updates here
-}
-
-// Define a second scene
-const Scene2 = {
-    preload: function () {
+    function preloadScene2() {
         // Additional preload for Scene2 if needed
-    },
-    create: function () {
-        // Additional setup for Scene2
+    }
+
+    function createScene2() {
         const text = this.add.text(400, 300, 'Scene 2 - Press Space to Go Back', {
             fontSize: '24px',
             fill: '#fff'
         });
         text.setOrigin(0.5);
 
-        // Set up an event listener for the space key to go back to Scene1
-        this.input.keyboard.on('keydown-SPACE', function (event) {
-            this.scene.start('default');
-        }, this);
-    },
-    update: function () {
+        // Event listener to go back to Scene1
+        this.input.keyboard.on('keydown-SPACE', () => {
+            this.scene.start('Scene1');
+        });
+    }
+
+    function updateScene2() {
         // Additional updates for Scene2 if needed
     }
-};
 
-// set up an event listener for the space key to go back to every scene 
-this.input.keyboard.on(keydown-one’ , function event {
-	this.scene.start(‘mage’);
-        } , this); 
+    // Additional scenes
+    const Scene3 = { /* mage */ };
+    const Scene4 = { /* tree */ };
+    const Scene5 = { /* dragon */ };
+    const Scene6 = { /* thunder */ };
 
-// set up an event listener for the space key to go back to every scene 
-this.input.keyboard.on(keydown-two’ , function event {
-	this.scene.start(‘dragon’);
+    // Add additional scenes to the game
+    game.scene.add('Scene1', Scene1);
+    game.scene.add('Scene2', Scene2);
+    // game.scene.add('Scene3', Scene3); // Uncomment and define this scene
+    // game.scene.add('Scene4', Scene4); // Uncomment and define this scene
+    // game.scene.add('Scene5', Scene5); // Uncomment and define this scene
+    // game.scene.add('Scene6', Scene6); // Uncomment and define this scene
 
-// set up an event listener for the space key to go back to every scene 
-this.input.keyboard.on(keydown-three’ , function event {
-	this.scene.start(‘trees’);
-
-// set up an event listener for the space key to go back to every scene 
-this.input.keyboard.on(keydown-four’ , function event {
-	this.scene.start(‘water’);
-
-// set up an event listener for the space key to go back to every scene 
-this.input.keyboard.on(keydown-four’ , function event {
-	this.scene.start(‘thunder’);
-
-	// set up an event listener for the space key to go back to every scene 
-this.input.keyboard.on(keydown-four’ , function event {
-	this.scene.start(‘meteor’);
-
-// Add both scenes to the game
-game.scene.add('mage', Scene1);
-game.scene.add('dragon ', Scene2);
-game.scene.add(‘trees ',scene3);
-game.scene.add('water ',scene4);
-game.scene.add('thunder ',scene5);
-game.scene.add('meteor ',scene6)
-
-
-
-
-// Start the initial scene
-game.scene.start('default');
+    // Start the initial scene
+    game.scene.start('Scene1'); // Start with Scene1
+</script>
+</body>
+</html>
