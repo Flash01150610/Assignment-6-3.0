@@ -99,18 +99,9 @@
 
                 // Set up an event listener for the space key to go back to Scene1
                 this.input.keyboard.on('keydown-SPACE', function(event) {
-                    this.scene.start('default');
+                    this.scene.start('mage');
                 }, this);
             },
-            update: function() {
-                // Additional updates for Scene2 if needed
-            }
-        };
-
-        // Add scenes to the game
-        game.scene.add('default', { preload: preload, create: create, update: update });
-        game.scene.add('Scene2', Scene2);
-
         // Start the initial scene
         game.scene.start('default');
     </script>
