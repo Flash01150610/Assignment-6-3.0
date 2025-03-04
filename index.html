@@ -30,7 +30,7 @@
     const game = new Phaser.Game(config);
 
     // Define the first scene
-    const Scene1 = {
+    const Scene1 = {mage} 
         preload: preload,
         create: create,
         update: update
@@ -59,7 +59,7 @@
 
         // Set up event listener for transitioning to the next scene
         this.input.keyboard.on('keydown-SPACE', () => {
-            this.scene.start('Scene2');
+            this.scene.start('');
         });
     }
 
@@ -99,7 +99,6 @@
     const Scene3 = { /* mage */ };
     const Scene4 = { /* tree */ };
     const Scene5 = { /* dragon */ };
-    const Scene6 = { /* thunder */ };
     // Start the initial scene
     game.scene.start('Scene1'); // Start with Scene1
 </script>
