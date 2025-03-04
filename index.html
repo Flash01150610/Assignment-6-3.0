@@ -19,11 +19,7 @@
             type: Phaser.CANVAS,
             width: 800,
             height: 600,
-            scene: {
-                preload: preload,
-                create: create,
-                update: update
-            }
+            scene: [Scene1, Scene2]
         };
 
         // Define global variables
@@ -38,55 +34,48 @@
         var gameOver = false;
         var scoreText;
 
-        // Create a new Phaser Game instance
-        const game = new Phaser.Game(config);
+        class Scene1 extends Phaser.Scene {
+            preload() {
+                this.load.image('background', 'assets/background.png');
+                this.load.image('mage', 'assets/mage.png');
+                this.load.image('tree', 'assets/tree.png');
+                this.load.image('dragon', 'assets/dragon.png');
+                this.load.image('thunder', 'assets/thunder.png');
+                this.load.image('water', 'assets/water.png');
+                this.load.spritesheet('rocks', 'assets/rocks.png', { frameWidth: 32, frameHeight: 48 });
+            }
 
-        // Define the preload function
-        function preload() {
-            this.load.image('mage', 'assets/mage.png');
-            this.load.image('tree', 'assets/tree.png');
-            this.load.image('dragon', 'assets/dragon.png');
-            this.load.image('thunder', 'assets/thunder.png');
-            this.load.image('water', 'assets/water.png');
-            this.load.spritesheet('rocks', 'assets/rocks.png', { frameWidth: 32, frameHeight: 48 });
+            create() {
+                // Add a background sprite
+                const background = this.add.sprite(0, 0, 'background').setOrigin(0, 0);
+
+                // Set up a text object to display scene information
+                const text = this.add.text(400, 300, 'Scene 1 - Press Space to Transition', {
+                    fontSize: '24px',
+                    fill: '#fff'
+                });
+                text.setOrigin(0.5);
+
+                // Add a mage sprite
+                mage = this.add.sprite(400, 200, 'mage');
+
+                // Define a key for transitioning to the next scene
+                const spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+                // Set up an event listener for the space key
+                this.input.keyboard.on('keydown-SPACE', () => {
+                    // Transition to the next scene
+                    this.scene.start('Scene2');
+                }, this);
+            }
+
+            update() {
+                // Add any game logic or updates here
+            }
         }
 
-        // Define the create function
-        function create() {
-            // Add a background sprite
-            const background = this.add.sprite(0, 0, 'background').setOrigin(0, 0);
-
-            // Set up a text object to display scene information
-            const text = this.add.text(400, 300, 'Scene 1 - Press Space to Transition', {
-                fontSize: '24px',
-                fill: '#fff'
-            });
-            text.setOrigin(0.5);
-
-            // Add a mage sprite
-            mage = this.add.sprite(400, 200, 'mage');
-
-            // Define a key for transitioning to the next scene
-            const spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-
-            // Set up an event listener for the space key
-            this.input.keyboard.on('keydown-SPACE', function(event) {
-                // Transition to the next scene
-                this.scene.start('Scene2');
-            }, this);
-        }
-
-        // Define the update function
-        function update() {
-            // Add any game logic or updates here
-        }
-
-        // Define the Scene2 object
-        const Scene2 = {
-            preload: function() {
-                // Additional preload for Scene2 if needed
-            },
-            create: function() {
+        class Scene2 extends Phaser.Scene {
+            create() {
                 // Set up a text object to display scene information
                 const text = this.add.text(400, 300, 'Scene 2 - Press Space to Go Back', {
                     fontSize: '24px',
@@ -98,12 +87,15 @@
                 dragon = this.add.sprite(400, 200, 'dragon');
 
                 // Set up an event listener for the space key to go back to Scene1
-                this.input.keyboard.on('keydown-SPACE', function(event) {
-                    this.scene.start('mage');
+                this.input.keyboard.on('keydown-SPACE', () => {
+                    // Transition to the previous scene
+                    this.scene.start('Scene1');
                 }, this);
-            },
-        // Start the initial scene
-        game.scene.start('default');
+            }
+        }
+
+        // Create a new Phaser Game instance
+        const game = new Phaser.Game(config);
     </script>
 </body>
 </html>
