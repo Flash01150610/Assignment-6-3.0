@@ -41,10 +41,13 @@ game.scene.add('mage', {
             fill: '#fff'
         });
         text.setOrigin(0.5);
+
+        // Create a key object
+        this.spaceKey = this.input.keyboard.createCursorKeys();
     },
     update: function (time, delta) {
         // Check for space key press
-        if (this.input.keyboard.isDown(Phaser.Input.Keyboard.SPACE)) {
+        if (this.spaceKey.space.isDown) {
             // Transition to the next scene
             this.scene.start('dragon');
         }
@@ -67,10 +70,13 @@ game.scene.add('dragon', {
             fill: '#fff'
         });
         text.setOrigin(0.5);
+
+        // Create a key object
+        this.spaceKey = this.input.keyboard.createCursorKeys();
     },
     update: function (time, delta) {
         // Check for space key press
-        if (this.input.keyboard.isDown(Phaser.Input.Keyboard.SPACE)) {
+        if (this.spaceKey.space.isDown) {
             // Transition to the previous scene
             this.scene.start('mage');
         }
