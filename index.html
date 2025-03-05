@@ -26,10 +26,12 @@ const game = new Phaser.Game(config);
 // Add both scenes to the game
 game.scene.add('mage', {
     preload: function () {
+        console.log('mage preload');
         // Load your assets here (images, spritesheets, etc.)
         this.load.image('mage', 'mage.jpg');
     },
     create: function () {
+        console.log('mage create');
         // Add a background sprite
         const background = this.add.sprite(0, 0, 'mage').setOrigin(0, 0);
 
@@ -45,6 +47,7 @@ game.scene.add('mage', {
 
         // Set up an event listener for the space key
         spaceKey.on('down', () => {
+            console.log('space key pressed');
             // Transition to the next scene
             this.scene.start('dragon');
         });
@@ -56,9 +59,11 @@ game.scene.add('mage', {
 
 game.scene.add('dragon', {
     preload: function () {
+        console.log('dragon preload');
         // Additional preload for Scene2 if needed
     },
     create: function () {
+        console.log('dragon create');
         // Additional setup for Scene2
         const background = this.add.rectangle(0, 0, 800, 600, 0xff0000);
         background.setOrigin(0, 0);
@@ -74,6 +79,7 @@ game.scene.add('dragon', {
 
         // Set up an event listener for the space key
         spaceKey.on('down', () => {
+            console.log('space key pressed in dragon scene');
             // Transition to the previous scene
             this.scene.start('mage');
         });
