@@ -23,7 +23,7 @@ const config = {
 };
 
 // Define the first scene
-class Scene1 extends Phaser.Scene {
+const scene1 mage={
     preload() {
         // Load your assets here (images, spritesheets, etc.)
         this.load.image('mage', 'mage.jpg');
@@ -53,18 +53,9 @@ class Scene1 extends Phaser.Scene {
     update() {
         // Add any game logic or updates here
     }
-
-    destroy() {
-        // Remove the event listener
-        if (this.spaceKeyListener) {
-            this.spaceKeyListener.remove();
-        }
-    }
-}
-
+};
 // Define the second scene
-class Scene2 extends Phaser.Scene {
-    create() {
+const dragon={
         // Additional setup for Scene2
         const text = this.add.text(400, 300, 'Scene 2 - Press Space to Go Back', {
             fontSize: '24px',
@@ -75,21 +66,14 @@ class Scene2 extends Phaser.Scene {
         // Set up an event listener for the space key to go back to Scene1
         this.spaceKeyListener = this.input.keyboard.on('keydown-SPACE', () => {
             // Transition to the previous scene
-            this.scene.start('Scene1');
+            this.scene.start('mage')
         });
     }
 
     update() {
         // Additional updates for Scene2 if needed
     }
-
-    destroy() {
-        // Remove the event listener
-        if (this.spaceKeyListener) {
-            this.spaceKeyListener.remove();
-        }
-    }
-}
+    };
 
 // Create a new Phaser Game instance
 const game = new Phaser.Game(config);
