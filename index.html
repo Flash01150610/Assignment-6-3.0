@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -77,6 +78,104 @@ game.scene.add('dragon', {
     update: function (time, delta) {
         // Check for space key press
        
+            // Transition to the previous scene
+            this.scene.start('mage');
+        }
+    }
+});
+
+// Start the initial scene
+game.scene.start('mage');
+    
+</script>
+
+</body>
+</html>
+Delete
+Save & Go
+Cancel
+It seems like you are missing the condition to check if the space key is down in the dragon scene. Here is the corrected code:
+
+CopyReplit
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Making your first Phaser 3 Game - Part 10</title>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<script type="text/javascript">
+// Create a new Phaser Game instance with a configuration object
+const config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    scene: {}
+};
+
+const game = new Phaser.Game(config);
+
+// Add both scenes to the game
+game.scene.add('mage', {
+    preload: function () {
+        console.log('mage preload');
+        // Load your assets here (images, spritesheets, etc.)
+        this.load.image('mage', 'mage.jpg');
+    },
+    create: function () {
+        console.log('mage create');
+        // Add a background sprite
+        const background = this.add.sprite(0, 0, 'mage').setOrigin(0, 0);
+
+        // Set up a text object to display scene information
+        const text = this.add.text(400, 300, 'Scene 1 - Press Space to Transition', {
+            fontSize: '24px',
+            fill: '#fff'
+        });
+        text.setOrigin(0.5);
+
+        // Create a key object
+        this.spaceKey = this.input.keyboard.createCursorKeys();
+    },
+    update: function (time, delta) {
+        // Check for space key press
+        if (this.spaceKey.space.isDown) {
+            // Transition to the next scene
+            this.scene.start('dragon');
+        }
+    }
+});
+
+game.scene.add('dragon', {
+    preload: function () {
+        console.log('dragon preload');
+        // Additional preload for Scene2 if needed
+    },
+    create: function () {
+        console.log('dragon create');
+        // Additional setup for Scene2
+        const background = this.add.rectangle(0, 0, 800, 600, 0xff0000);
+        background.setOrigin(0, 0);
+
+        const text = this.add.text(400, 300, 'Scene 2 - Press Space to Go Back', {
+            fontSize: '24px',
+            fill: '#fff'
+        });
+        text.setOrigin(0.5);
+
+        // Create a key object
+        this.spaceKey = this.input.keyboard.createCursorKeys();
+    },
+    update: function (time, delta) {
+        // Check for space key press
+        if (this.spaceKey.space.isDown) {
             // Transition to the previous scene
             this.scene.start('mage');
         }
