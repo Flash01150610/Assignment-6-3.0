@@ -28,7 +28,7 @@ class Scene1 extends Phaser.Scene {
         const spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         // Set up an event listener for the space key
-        this.input.keyboard.on('keydown-SPACE', () => {
+        this.spaceKeyListener = this.input.keyboard.on('keydown-SPACE', () => {
             // Transition to the next scene
             this.scene.start('Scene2');
         });
@@ -36,6 +36,13 @@ class Scene1 extends Phaser.Scene {
 
     update() {
         // Add any game logic or updates here
+    }
+
+    destroy() {
+        // Remove the event listener
+        if (this.spaceKeyListener) {
+            this.spaceKeyListener.remove();
+        }
     }
 }
 
@@ -50,7 +57,7 @@ class Scene2 extends Phaser.Scene {
         text.setOrigin(0.5);
 
         // Set up an event listener for the space key to go back to Scene1
-        this.input.keyboard.on('keydown-SPACE', () => {
+        this.spaceKeyListener = this.input.keyboard.on('keydown-SPACE', () => {
             // Transition to the previous scene
             this.scene.start('Scene1');
         });
@@ -58,6 +65,13 @@ class Scene2 extends Phaser.Scene {
 
     update() {
         // Additional updates for Scene2 if needed
+    }
+
+    destroy() {
+        // Remove the event listener
+        if (this.spaceKeyListener) {
+            this.spaceKeyListener.remove();
+        }
     }
 }
 
