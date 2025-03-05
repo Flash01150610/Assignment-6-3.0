@@ -1,6 +1,6 @@
-<!doctype html> 
-<html lang="en"> 
-<head> 
+<!doctype html>
+<html lang="en">
+<head>
     <meta charset="UTF-8" />
     <title>Making your first Phaser 3 Game - Part 10</title>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
@@ -18,50 +18,43 @@ const config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
-    scene: {
-        // Initial scene
-        preload: preload,
-        create: create,
-        update: update
-    }
+    scene: {}
 };
 
 const game = new Phaser.Game(config);
 
-// Preload function for loading assets
-function preload() {
-    // Load your assets here (images, spritesheets, etc.)
-    this.load.image('mage', 'mage.jpg');
+// Add both scenes to the game
+game.scene.add('mage', {
+    preload: function () {
+        // Load your assets here (images, spritesheets, etc.)
+        this.load.image('mage', 'mage.jpg');
+    },
+    create: function () {
+        // Add a background sprite
+        const background = this.add.sprite(0, 0, 'mage').setOrigin(0, 0);
 
-// Create function for initializing game objects
-function create() {
-    // Add a background sprite
-    const background = this.add.sprite(0, 0, 'mage').setOrigin(0, 0);
+        // Set up a text object to display scene information
+        const text = this.add.text(400, 300, 'Scene 1 - Press Space to Transition', {
+            fontSize: '24px',
+            fill: '#fff'
+        });
+        text.setOrigin(0.5);
 
-    // Set up a text object to display scene information
-    const text = this.add.text(400, 300, 'Scene 1 - Press Space to Transition', {
-        fontSize: '24px',
-        fill: '#fff'
-    });
-    text.setOrigin(0.5);
+        // Define a key for transitioning to the next scene
+        const spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-    // Define a key for transitioning to the next scene
-    const spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        // Set up an event listener for the space key
+        this.input.keyboard.on('keydown-SPACE', function (event) {
+            // Transition to the next scene
+            this.scene.start('dragon');
+        }, this);
+    },
+    update: function () {
+        // Add any game logic or updates here
+    }
+});
 
-    // Set up an event listener for the space key
-    this.input.keyboard.on('keydown-SPACE', function (event) {
-        // Transition to the next scene
-        this.scene.start('mage');
-    }, this);
-}
-
-// Update function for game logic
-function update() {
-    // Add any game logic or updates here
-}
-
-// Define a second scene
-const dragon{
+game.scene.add('dragon', {
     preload: function () {
         // Additional preload for Scene2 if needed
     },
@@ -81,12 +74,8 @@ const dragon{
     update: function () {
         // Additional updates for Scene2 if needed
     }
-};
+});
 
-
-//Add both scenes to the game 
-game.scene.add ('mage');
-game.scene.add('dragon');
 // Start the initial scene
 game.scene.start('mage');
     
@@ -94,4 +83,3 @@ game.scene.start('mage');
 
 </body>
 </html>
-
