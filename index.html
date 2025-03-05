@@ -3,55 +3,45 @@ const config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
-    scene: {
-        // Initial scene
-        preload: preload,
-        create: create,
-        update: update
-    }
+    scene: [Scene1, Scene2]
 };
 
-const game = new Phaser.Game(config);
+// Define the first scene
+class Scene1 extends Phaser.Scene {
+    preload() {
+        // Load your assets here (images, spritesheets, etc.)
+        this.load.image('mage', 'path/to/background.png');
+    }
 
-// Preload function for loading assets
-function preload() {
-    // Load your assets here (images, spritesheets, etc.)
-    this.load.image('mage', 'path/to/background.png');
+    create() {
+        // Add a background sprite
+        const background = this.add.sprite(0, 0, 'mage').setOrigin(0, 0);
+
+        // Set up a text object to display scene information
+        const text = this.add.text(400, 300, 'Scene 1 - Press Space to Transition', {
+            fontSize: '24px',
+            fill: '#fff'
+        });
+        text.setOrigin(0.5);
+
+        // Define a key for transitioning to the next scene
+        const spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+        // Set up an event listener for the space key
+        this.input.keyboard.on('keydown-SPACE', () => {
+            // Transition to the next scene
+            this.scene.start('Scene2');
+        });
+    }
+
+    update() {
+        // Add any game logic or updates here
+    }
 }
 
-// Create function for initializing game objects
-function create(mage) {
-    // Add a background sprite
-    const background = this.add.sprite(0, 0, 'background').setOrigin(0, 0);
-
-    // Set up a text object to display scene information
-    const text = this.add.text(400, 300, 'Scene 1 - Press Space to Transition', {
-        fontSize: '24px',
-        fill: '#fff'
-    });
-    text.setOrigin(0.5);
-
-    // Define a key for transitioning to the next scene
-    const spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-
-    // Set up an event listener for the space key
-    this.input.keyboard.on('keydown-SPACE', function (event) {
-        // Transition to the next scene
-        this.scene.start('Scene2');
-    }, this);
-}
-
-// Update function for game logic
-function update() {
-    // Add any game logic or updates here
-}
-
-// Define a second scene
-const Scene2 = {
-    preload: function () {
-        // Additional preload for Scene2 if needed
-    },
-    create: function () {
+// Define the second scene
+class Scene2 extends Phaser.Scene {
+    create() {
         // Additional setup for Scene2
         const text = this.add.text(400, 300, 'Scene 2 - Press Space to Go Back', {
             fontSize: '24px',
@@ -60,11 +50,16 @@ const Scene2 = {
         text.setOrigin(0.5);
 
         // Set up an event listener for the space key to go back to Scene1
-        this.input.keyboard.on('keydown-SPACE', function (event) {
-            this.scene.start('default');
-        }, this);
-    },
-    update: function () {
+        this.input.keyboard.on('keydown-SPACE', () => {
+            // Transition to the previous scene
+            this.scene.start('Scene1');
+        });
+    }
+
+    update() {
         // Additional updates for Scene2 if needed
     }
-};
+}
+
+// Create a new Phaser Game instance
+const game = new Phaser.Game(config);
